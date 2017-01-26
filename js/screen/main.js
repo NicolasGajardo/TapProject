@@ -9,5 +9,8 @@
     Context.context.fillStyle = '#EADB8B';
     Context.context.fill();
 
+    //TODO: add selecteable buttons (Play, Levels, Options, Exit etc...)
+    //function.onClick(button1) // new screen
+    loadScript("js/game/level_one/simple_one.js", true);
   });
 })()

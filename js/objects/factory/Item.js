@@ -1,40 +1,34 @@
-
 console.log("Item.js INIT");
-var Item = function functionName(filename, is_pattern) {
+var Item = function (filename) {
 
-    this.image = null;
-    this.pattern = null;
-    this.TO_RADIANS = Math.PI / 180;
+  this.image = null;
+  this.TO_RADIANS = Math.PI / 180;
+  this.x = 0;
+  this.y = 0;
 
-    if (filename != undefined && filename != "" && filename != null) {
-        this.image = new Image();
-        this.image.src = filename;
+  if (filename != undefined && filename != "" && filename != null) {
+    this.image = new Image();
+    this.image.src = filename;
 
-        if (is_pattern) {
-            this.pattern = Context.context.createPattern(this.image, 'repeat');
-        }
+  } else {
+    console.log("Unable to load Item.");
+  }
+
+  this.draw = function(x, y, w, h) {
+
+    if (w != undefined && h != undefined) {
+      Context.context.drawImage(this.image, x, y, this.image.width, this.image.height);
     } else {
-        console.log("Unable to load sprite.");
+      Context.context.drawImage(this.image, x, y, w, h);
     }
 
-    this.draw = function(x, y, w, h) {
-        if (this.pattern != null) {
-            Context.context.fillStyle = this.pattern;
-            Context.context.fillRect(x, y, w, h);
-        } else {
-            if (w != undefined && h != undefined) {
-                Context.context.drawImage(this.image, x, y, this.image.width, this.image.height);
-            } else {
-                Context.context.drawImage(this.image, x, y, w, h);
-            }
-        }
-    };
+  };
 
-    this.rotate = function(x, y, angle) {
-        Context.context.save();
-        Context.context.translate(x, y);
-        Context.context.rotate(angle * this.TO_RADIANS);
-        Context.context.drawImage(this.image, -(this.image.width / 2), -(this.image.width / 2));
-        Context.context.restore();
-    };
+  this.rotate = function(x, y, angle) {
+    Context.context.save();
+    Context.context.translate(this.x + x, this.y + y);
+    Context.context.rotate(angle * this.TO_RADIANS);
+    Context.context.drawImage(this.image, -(this.image.width / 2), -(this.image.width / 2));
+    Context.context.restore();
+  };
 }
